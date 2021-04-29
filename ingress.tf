@@ -5,7 +5,7 @@ resource "kubernetes_ingress" "http_ingress" {
   }    
   spec {
       backend {
-          service_name = kubernetes_deployment.apache2_koho.metadata.name
+          service_name = kubernetes_deployment.apache2_koho.metadata.0.name
           service_port = "80"
       }
       tls {

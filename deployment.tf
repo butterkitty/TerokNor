@@ -2,7 +2,7 @@ resource "kubernetes_deployment" "apache2_koho" {
   metadata {
     name = "apache2-koho"
 
-    labels {
+    labels = {
       app  = "apache2-koho"
       role = "master"
       tier = "frontend"
@@ -10,45 +10,55 @@ resource "kubernetes_deployment" "apache2_koho" {
   }
   spec {
     replicas = 2
-
-    selector {
-      app  = "apache2-koho"
-      role = "master"
-      tier = "frontend"
-    }
     strategy {
-      rollingUpdate {
-        maxSurge = 1
-        maxUnavailable = 1
-      }
       type = "RollingUpdate"
+      rolling_update {
+        max_surge = 1
+        max_unavailable = 1
+      }      
     }
-
+    selector {
+      match_labels = {
+        app  = "apache2-koho"
+        role = "master"
+        tier = "frontend"
+      }
+    }
     template {
-      container {
-        image = "httpd:latest"
-        name  = "apache2"
-        
-        port {
-          container_port = 80
+      metadata {
+        labels ={
+          app  = "apache2-koho"
+          role = "master"
+          tier = "frontend"
         }
-        liveness_probe {
-          http_get {
-            path = "/"
-            port = 80
+      }
+      spec {
+        container {
+          image = "httpd:latest"
+          name  = "apache2"
+        
+          port {
+            container_port = 80
+          } 
+          liveness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+            initial_delay_seconds = 2
+            period_seconds = 10
           }
-          initialDelaySeconds = 2
-          periodSeconds = 10
         }
       }
     }
   }
 }
-resource "kubernetes_deployment" "mariadb_deployment" {
+//Would tls connect mariadb for apache app
+resource "kubernetes_deployment" "mariadb" {
   metadata {
     name = "mariadb"
 
-    labels {
+    labels = {
       app  = "mariadb"
       role = "master"
       tier = "backend"
@@ -56,36 +66,49 @@ resource "kubernetes_deployment" "mariadb_deployment" {
   }
   spec {
     replicas = 2
-
+      strategy {
+       type = "RollingUpdate"
+        rolling_update {
+          max_surge = 1
+          max_unavailable = 1
+        }
+      }
     selector {
-      app  = "mariadb"
-      role = "master"
-      tier = "backend"
-    }
-    strategy {
-      rollingUpdate {
-        maxSurge = 1
-        maxUnavailable = 1
+      match_labels = {
+        app  = "mariadb"
+        role = "master"
+        tier = "backend"
       }
-      type = "RollingUpdate"
     }
-
     template {
-      container {
-        image = "mariadb:10.3"
-        name  = "mariadb"
-        
-        port {
-          container_port = 3306
-        }
-        volumeMounts {
-            mountPath = "/var/lib/mysql"
-            name = "mariadb-data"
+      metadata {
+        labels ={
+          app  = "apache2-koho"
+          role = "master"
+          tier = "frontend"
         }
       }
-      volumes {
-        name = "mariadb-data"
-        persistentVolumeClaim = "mariadb-pvc"
+      spec {
+        container {
+          image = "mariadb:10.3"
+          name  = "mariadb"
+          resources {
+            requests = {
+              storage = "5gi"
+            }
+          }
+          port {
+            container_port = 3306
+          }
+          volume_mount {
+              mount_path = "/var/lib/mysql"
+              name = "mariadb-data"
+          }
+        }
+        //persistent_volume_claim {
+        //  claim_name = "mariadb-data"
+        //   = "mariadb-pvc"
+        //}
       }
     }
   }

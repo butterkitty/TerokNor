@@ -2,7 +2,7 @@
 // Also, I would very likely just use cert_manager
 resource "kubernetes_secret" "koho_tls" {
   metadata {
-    name = "koho_tls"
+    name = "koho.rescuityonline.com"
   }
 
   data = {
@@ -10,5 +10,5 @@ resource "kubernetes_secret" "koho_tls" {
     "tls.key" = file("tls.key")
   }
 
-  type = "kubernetes.io/basic-auth"
+  type = "kubernetes.io/tls"
 }
