@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"cert_manager","Source":"github.com/sculley/terraform-kubernetes-cert-manager","Dir":".terraform/modules/cert_manager"}]}

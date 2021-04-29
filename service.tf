@@ -1,4 +1,4 @@
-resource "kubernetes_service" "koho.rescuityonline.com" {
+resource "kubernetes_service" "koho-rescuityonline" {
   metadata {
     name = kubernetes_deployment.apache2_koho.metadata.0.labels.app
   }
