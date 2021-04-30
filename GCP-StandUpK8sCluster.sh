@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Install kubectl v1.19.9
+
 # Choosing K8s v1.19.9 since that is what I am running for my cluster at home.
 # Keeping hdd's on nodes smaller @ 40GB since we're not running much, but I don't want to be bound up in the future in case we want to install more applications.
 # Turning off many settings because I am legit deploying this to my own GCP, and I don't want to pay too much.  I still want the load-balancer though since that will make future configuration for ingress easier.

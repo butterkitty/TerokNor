@@ -1,0 +1,11 @@
+podLabels:
+  app: "mariadb-galera"
+  role: "master"
+  tier: "frontend"
+# How many replicas we want to use
+replicaCount : 3
+# We NEED persistence!
+persistence:
+  enabled : true
+  size : "5Gi"
+

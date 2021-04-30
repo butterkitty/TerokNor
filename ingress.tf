@@ -10,7 +10,7 @@ resource "kubernetes_ingress" "http_ingress" {
       }
       tls {
           hosts = ["koho.rescuityonline.com"]
-          secret_name = "koho_tls"
+          secret_name = "koho.rescuityonline.com"
       }
   }
 }

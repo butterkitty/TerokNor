@@ -18,7 +18,11 @@ provider "kubernetes" {
     data.google_container_cluster.main-cluster-zone-a.master_auth[0].cluster_ca_certificate,
   )
 }
-
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
 // Would use cert_manager, but no time
 /*module "cert_manager" {
   source = "github.com/sculley/terraform-kubernetes-cert-manager"
