@@ -24,26 +24,3 @@ resource "kubernetes_ingress" "apache2_ingress" {
       }
   }
 }
-/*resource "google_compute_ssl_certificate" "https-koho-rescuityonline" {
-  name_prefix = "koho-rescuityonline"
-  description = "The tls cert for koho.rescuityonline.com"
-  private_key = file("tls.key")
-  certificate = file("tls.crt")
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}*/
-
-/*resource "kubernetes_ingress" "https_ingress" {
-  metadata {
-      name = "https-ingress"
-  }    
-  spec {
-      backend {
-          serviceName = "webserver"
-          servicePort = "443"
-      }
-  }
-}
-*/
