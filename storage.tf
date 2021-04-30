@@ -13,5 +13,4 @@
         }
         volume_name = "${kubernetes_persistent_volume.example.metadata.0.name}"
     }
-}
-*/
+}*/

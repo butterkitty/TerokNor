@@ -18,20 +18,24 @@ gcloud container clusters get-credentials main-cluster-zone-a --region northamer
 # Deploy the K8s Dashboard
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 kubectl apply -f https://raw.githubusercontent.com/hashicorp/learn-terraform-provision-gke-cluster/master/kubernetes-dashboard-admin.rbac.yaml
+echo "Initializing Terraform"
+terraform init
+echo "Applying Terraform templates"
+terraform apply
+mariadbpass=$(kubectl get secret --namespace default mariadb-galera -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
+echo "Your mariadb root password is: " $mariadbpass
+mariadbpass=""
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep service-controller-token | awk '{print $1}')
 echo "\nAccess http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ and use the token printed previously to continue\n"
 kubectl proxy
 
-# Gather the credentials for kubectl so we can do work with it
-#gcloud container clusters get-credentials main-cluster-zone-b --region us-east1-b
-
-# Deploy the K8s Dashboard
-#kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
-#kubectl apply -f https://raw.githubusercontent.com/hashicorp/learn-terraform-provision-gke-cluster/master/kubernetes-dashboard-admin.rbac.yaml
-#kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep service-controller-token | awk '{print $1}')
-#echo "\nAccess http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ and use the token printed previously to continue\n"
-#kubectl proxy
-
 #Setup dns
 # Config DNS in ingress, 
 # Change email in setupCerts.yaml
+# The configuration can take up to 10 minutes to stabilize
+
+# Generate cert
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#    -out tls.crt \
+#    -keyout tls.key \
+#    -subj "/CN=koho.rescuityonline.com/O=koho-tls"

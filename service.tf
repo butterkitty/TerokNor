@@ -1,15 +1,32 @@
-resource "kubernetes_service" "koho-rescuityonline" {
+resource "kubernetes_service" "apache2" {
     metadata {
         name = "apache2"
     }
     spec {
         selector = {
-            app = kubernetes_deployment.apache2_koho.metadata.0.name
+            app = kubernetes_deployment.apache2-koho.metadata.0.name
         }
-        session_affinity = "ClientIP"
+//        session_affinity = "ClientIP"
         type = "NodePort"
         port {
-            name = "http"
+            name = "apache2"
+            port = 8080
+            target_port = 80
+        }
+    }
+}
+resource "kubernetes_service" "phpmyadmin" {
+    metadata {
+        name = "phpmyadmin"
+    }
+    spec {
+        selector = {
+            app = kubernetes_deployment.phpmyadmin.metadata.0.name
+        }
+//        session_affinity = "ClientIP"
+        type = "NodePort"
+        port {
+            name = "phpmyadmin"
             port = 8080
             target_port = 80
         }

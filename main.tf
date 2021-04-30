@@ -23,9 +23,9 @@ provider "helm" {
     config_path = "~/.kube/config"
   }
 }
+variable "mariadb_pass" {
+    description = "Database root password"
+    type = string
+    sensitive = true
+}
 // Would use cert_manager, but no time
-/*module "cert_manager" {
-  source = "github.com/sculley/terraform-kubernetes-cert-manager"
-
-  replica_count = 2
-}*/

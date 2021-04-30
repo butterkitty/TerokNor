@@ -12,3 +12,15 @@ resource "kubernetes_secret" "koho_tls" {
 
   type = "kubernetes.io/tls"
 }
+resource "kubernetes_secret" "mariadb-phpmyadmin" {
+    metadata {
+        name = "mariadb-phpmyadmin"
+    }
+    data = {
+        MYSQL_ROOT_PASSWORD = var.mariadb_pass    
+    }
+    type = "kubernetes.io/opaque"
+
+    // Need to have this dependency or else phpmyadmin will try to install before the db is even created
+    //depends_on = [helm_release.mariadb-galera]
+}

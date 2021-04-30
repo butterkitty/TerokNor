@@ -1,5 +1,5 @@
 //Would use tls connect mariadb for apache app with more time
-/*resource "helm_release" "mariadb-galera" {
+resource "helm_release" "mariadb-galera" {
     name       = "mariadb-galera"
 
     repository = "https://charts.bitnami.com/bitnami"
@@ -8,4 +8,8 @@
     values = [
         file("mariadb-helm.yaml")
     ]
-}*/
+    set {
+        name = "rootUser.password"
+        value = var.mariadb_pass
+    }
+}
