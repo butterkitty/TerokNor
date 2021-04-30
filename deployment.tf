@@ -37,9 +37,8 @@ resource "kubernetes_deployment" "apache2-koho" {
           image = "httpd:latest"
           name  = "apache2"
         
-          env {
-              name = "PORT"
-              value = "80"
+          port {
+              container_port = 80
           }
           liveness_probe {
             http_get {
@@ -55,6 +54,7 @@ resource "kubernetes_deployment" "apache2-koho" {
   }
 }
 resource "kubernetes_deployment" "phpmyadmin" {
+  depends_on = [helm_release.mariadb-galera]
   metadata {
     name = "phpmyadmin"
 
@@ -99,7 +99,7 @@ resource "kubernetes_deployment" "phpmyadmin" {
           }
           env {
               name = "PMA_ABSOLUTE_URI"
-              value = "https://koho.rescuityonline.com/phpmyadmin"
+              value = "https://kohomyadmin.rescuityonline.com/"
           }
           env {
               name = "MYSQL_ROOT_PASSWORD"

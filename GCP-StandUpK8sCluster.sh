@@ -35,7 +35,11 @@ kubectl proxy
 # The configuration can take up to 10 minutes to stabilize
 
 # Generate cert
-# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 #    -out tls.crt \
 #    -keyout tls.key \
 #    -subj "/CN=koho.rescuityonline.com/O=koho-tls"
+#openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#    -out myadmintls.crt \
+#    -keyout myadmintls.key \
+#    -subj "/CN=kohomyadmin.rescuityonline.com/O=koho-tls"

@@ -1,33 +1,6 @@
-#Only need 1 ingress
-/*resource "kubernetes_ingress" "apache2_ingress" {
+resource "kubernetes_ingress" "apache2_ingress" {
     metadata {
         name = "apache2-ingress"
-        annotations = {
-            "kubernetes.io/ingress.class" = "gce"
-        }
-    }    
-    spec {
-        rule {
-            host = "koho.rescuityonline.com"
-            http {
-                path {
-                    path = "/*"
-                    backend {
-                        service_name = kubernetes_service.koho-rescuityonline.metadata.0.name
-                        service_port = kubernetes_service.koho-rescuityonline.spec.0.port.0.port
-                    }
-                }
-            }
-        }
-        tls {
-            hosts = ["koho.rescuityonline.com"]
-            secret_name = "koho-tls"
-        }
-    }
-}*/
-resource "kubernetes_ingress" "maingkeingress" {
-    metadata {
-        name = "maingkeingress"
         annotations = {
             "kubernetes.io/ingress.class" = "gce"
         }
@@ -44,12 +17,26 @@ resource "kubernetes_ingress" "maingkeingress" {
                     }
                 }
             }
-        }  
+        }
+        tls {
+            hosts = ["koho.rescuityonline.com"]
+            secret_name = "koho-tls"
+        }
+    }
+}
+resource "kubernetes_ingress" "kohomyadminingress" {
+    metadata {
+        name = "kohomyadmin-ingress"
+        annotations = {
+            "kubernetes.io/ingress.class" = "gce"
+        }
+    }    
+    spec {
         rule {
-            host = "koho.rescuityonline.com"
+            host = "kohomyadmin.rescuityonline.com"
             http {
                 path {
-                    path = "/phpmyadmin"
+                    path = "/*"
                     backend {
                         service_name = kubernetes_service.phpmyadmin.metadata.0.name
                         service_port = kubernetes_service.phpmyadmin.spec.0.port.0.port
@@ -57,10 +44,9 @@ resource "kubernetes_ingress" "maingkeingress" {
                 }
             }
         }
-
         tls {
-            hosts = ["koho.rescuityonline.com"]
-            secret_name = "koho-tls"
+            hosts = ["kohomyadmin.rescuityonline.com"]
+            secret_name = "kohomyadmin-tls"
         }
     }
 }

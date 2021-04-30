@@ -4,9 +4,9 @@ resource "kubernetes_service" "apache2" {
     }
     spec {
         selector = {
-            app = kubernetes_deployment.apache2-koho.metadata.0.name
+            app = "apache2-koho"
         }
-//        session_affinity = "ClientIP"
+        session_affinity = "ClientIP"
         type = "NodePort"
         port {
             name = "apache2"
@@ -21,9 +21,8 @@ resource "kubernetes_service" "phpmyadmin" {
     }
     spec {
         selector = {
-            app = kubernetes_deployment.phpmyadmin.metadata.0.name
+            app = "phpmyadmin"
         }
-//        session_affinity = "ClientIP"
         type = "NodePort"
         port {
             name = "phpmyadmin"

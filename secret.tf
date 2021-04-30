@@ -12,6 +12,18 @@ resource "kubernetes_secret" "koho_tls" {
 
   type = "kubernetes.io/tls"
 }
+resource "kubernetes_secret" "kohomyadmin_tls" {
+  metadata {
+    name = "kohomyadmin-tls"
+  }
+
+  data = {
+    "tls.crt" = file("myadmin-tls.crt")
+    "tls.key" = file("myadmin-tls.key")
+  }
+
+  type = "kubernetes.io/tls"
+}
 resource "kubernetes_secret" "mariadb-phpmyadmin" {
     metadata {
         name = "mariadb-phpmyadmin"
