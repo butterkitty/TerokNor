@@ -37,9 +37,13 @@ resource "kubernetes_deployment" "apache2_koho" {
           image = "httpd:latest"
           name  = "apache2"
         
-          port {
+/*          port {
             container_port = 80
-          } 
+          }*/
+          env {
+              name = "PORT"
+              value = "80"
+          }
           liveness_probe {
             http_get {
               path = "/"
@@ -53,4 +57,3 @@ resource "kubernetes_deployment" "apache2_koho" {
     }
   }
 }
-

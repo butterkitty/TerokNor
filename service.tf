@@ -1,16 +1,17 @@
 resource "kubernetes_service" "koho-rescuityonline" {
-  metadata {
-    name = kubernetes_deployment.apache2_koho.metadata.0.labels.app
-  }
-  spec {
-    selector = {
-      app = "apache2-koho"
+    metadata {
+        name = "apache2"
     }
-    session_affinity = "ClientIP"
-    type = "LoadBalancer"
-    port {
-      port = 80
-      target_port = 80
+    spec {
+        selector = {
+            app = kubernetes_deployment.apache2_koho.metadata.0.name
+        }
+        session_affinity = "ClientIP"
+        type = "NodePort"
+        port {
+            name = "http"
+            port = 8080
+            target_port = 80
+        }
     }
-  }
 }

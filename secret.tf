@@ -2,7 +2,7 @@
 // Also, I would very likely just use cert_manager
 resource "kubernetes_secret" "koho_tls" {
   metadata {
-    name = "koho.rescuityonline.com"
+    name = "koho-tls"
   }
 
   data = {
