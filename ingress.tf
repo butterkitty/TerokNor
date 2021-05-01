@@ -7,7 +7,7 @@ resource "kubernetes_ingress" "apache2_ingress" {
     }    
     spec {
         rule {
-            host = "koho.rescuityonline.com"
+            host = var.main_subdomain
             http {
                 path {
                     path = "/*"
@@ -19,21 +19,21 @@ resource "kubernetes_ingress" "apache2_ingress" {
             }
         }
         tls {
-            hosts = ["koho.rescuityonline.com"]
-            secret_name = "koho-tls"
+            hosts = [var.main_subdomain]
+            secret_name = kubernetes_secret.tls.metadata.0.name
         }
     }
 }
-resource "kubernetes_ingress" "kohomyadminingress" {
+resource "kubernetes_ingress" "myadminingress" {
     metadata {
-        name = "kohomyadmin-ingress"
+        name = "myadmin-ingress"
         annotations = {
             "kubernetes.io/ingress.class" = "gce"
         }
     }    
     spec {
         rule {
-            host = "kohomyadmin.rescuityonline.com"
+            host = var.myadmin_subdomain
             http {
                 path {
                     path = "/*"
@@ -45,8 +45,8 @@ resource "kubernetes_ingress" "kohomyadminingress" {
             }
         }
         tls {
-            hosts = ["kohomyadmin.rescuityonline.com"]
-            secret_name = "kohomyadmin-tls"
+            hosts = [var.myadmin_subdomain]
+            secret_name = kubernetes_secret.myadmin_tls.metadata.0.name
         }
     }
 }

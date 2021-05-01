@@ -1,6 +1,6 @@
 // I would likely store this file in a vault like keypass or the Google Cloud Secrets Engine
 // Also, I would very likely just use cert_manager
-resource "kubernetes_secret" "koho_tls" {
+resource "kubernetes_secret" "tls" {
   metadata {
     name = "koho-tls"
   }
@@ -12,7 +12,7 @@ resource "kubernetes_secret" "koho_tls" {
 
   type = "kubernetes.io/tls"
 }
-resource "kubernetes_secret" "kohomyadmin_tls" {
+resource "kubernetes_secret" "myadmin_tls" {
   metadata {
     name = "kohomyadmin-tls"
   }
@@ -32,7 +32,4 @@ resource "kubernetes_secret" "mariadb-phpmyadmin" {
         MYSQL_ROOT_PASSWORD = var.mariadb_pass    
     }
     type = "kubernetes.io/opaque"
-
-    // Need to have this dependency or else phpmyadmin will try to install before the db is even created
-    //depends_on = [helm_release.mariadb-galera]
 }
