@@ -1,7 +1,19 @@
 #!/bin/bash
 
 # INSTRUCTIONS:
-# Change all the settings to your own in the main.tf file and the gcloud commands in this file.
+
+# Install the GCloud SDK https://cloud.google.com/sdk/docs/install
+# Install kubectl 1.19.9 using the kubectl binary with curl method 
+#   https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/ (Replace the current version in the url with v1.19.9)
+
+# Install terraform 
+
+# Setup a new service on Google
+# Navigate to https://cloud.google.com/service-infrastructure/docs/service-management/getting-started
+# Follow the directions on the page and when downloading the json file, download it to this folder and name it "deployment_creds.json"
+
+# (Make sure to add the service account to the roles: Compute Engine default service account and Google APIs Service Agent)
+
 
 # Generate the certificates using:
 # openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -14,7 +26,8 @@
 #    -subj "/CN=<subdomain>/O=koho-tls"
 # 
 # CHANGE <subdomain> TO YOUR OWN AND USE 2 DIFFERENT SUBDOMAINS
-# Make sure to install kubectl v1.19.9 on your current computer/server that you're using right now.  Yeah, that one
+
+# Change all the settings to your own in the main.tf file and the gcloud commands in this file.
 
 project="koho-deployment-test"
 cluster_name="main-zone"
@@ -47,6 +60,8 @@ echo "Initializing Terraform"
 terraform init
 echo "Applying Terraform templates"
 terraform apply
+
+echo -e "\n \n \n \n \n"
 
 printf "Welcome to "
 sleep 1
@@ -82,4 +97,5 @@ kubectl proxy
 # Navigate to the dashboard, look at the ingresses and, eventually depending on how slow Google is being, there should be an ip per ingress.  
 # These are the load balencers and should be set accordingly to the dns' that we set during the setup process
 
-# To test connectivity, log in phpmyadmin as root using the mariadb root password given
+# To test connectivity, log in phpmyadmin as root on the myadmin subdomain using the mariadb root password given
+# Notice that it has access to the DB and lists all the information for the Galera cluster.

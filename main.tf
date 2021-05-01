@@ -5,7 +5,7 @@
 
 // List of regions and zones https://cloud.google.com/compute/docs/regions-zones
 provider "google" {
-    credentials = file("koho-deployment-test_creds.json")
+    credentials = file("deployment_creds.json")
     project     = "koho-deployment-test"
     region      = "northamerica-northeast1"
 }
