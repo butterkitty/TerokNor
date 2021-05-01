@@ -54,6 +54,8 @@ Take the following steps to enable the Kubernetes Engine API:
 
 Run `./GCP-StandUpK8sCluster.sh` and let Terok Nor fly!
 
+After the script finishes running, heed the instructions printed out to the terminal by the script
+
 # Verification
 
 Navigate to the dashboard, look at the ingresses and, eventually depending on how slow Google is being, there should be an ip per ingress.  
