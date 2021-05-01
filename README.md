@@ -20,26 +20,37 @@ Most of the instructions are also in the file GCP-StandUpK8sCluster.sh, which is
 Setup a new service on Google
 Navigate to https://cloud.google.com/service-infrastructure/docs/service-management/getting-started
 
+**Make sure that you are the owner of the project for the account you used to login to when signed into Google Cloud**
+
 Follow the directions on the page and when downloading the json file, download it to this folder and name it "deployment_creds.json"
 
-**(Make sure to add the service account to the roles: Compute Engine default service account and Google APIs Service Agent)**
+**(Make sure to add the service account to the roles: Kubernetes Engine Admin, Storage Admin, and Viewer (Seriously, the role called Viewer).  These can be added via the IAM section in the Google Cloud Console for the service account you created)**
+
 
 ## Generate the certificates using:
 *NOTE: If you already have the certificates for each domain, just name them appropriately*
 
-`openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-   -out tls.crt \
-   -keyout tls.key \
-   -subj "/CN=<subdomain>/O=koho-tls"`
+`openssl req -x509 -nodes -days 365 -newkey rsa:2048
+   -out tls.crt
+   -keyout tls.key
+   -subj "/CN=<FQDN>/O=yourorganization"`
 
-`openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-   -out myadmintls.crt \
-   -keyout myadmintls.key \
-   -subj "/CN=<subdomain>/O=koho-tls"`
+`openssl req -x509 -nodes -days 365 -newkey rsa:2048
+   -out myadmin-tls.crt
+   -keyout myadmin-tls.key
+   -subj "/CN=<FQDN>/O=yourorganization"`
 
-CHANGE `<subdomain>` TO YOUR OWN AND USE 2 DIFFERENT SUBDOMAINS
+**Change `<FQDN>` to your own and use 2 different FQDN's**
 
-Change all the settings to your own in the main.tf file and the gcloud commands in this file appropriately to your given plan.
+Next change all the settings to your own in the main.tf file and the gcloud commands in this file appropriately to your given plan. For the project, use the project ID, not the name. This can be seen via when you choose which project to use in the GCloud Console.
+
+Take the following steps to enable the Kubernetes Engine API:
+  1. Visit the Kubernetes Engine page in the Google Cloud Console.
+  2. Create or select a project.
+  3. Wait for the API and related services to be enabled. This can take several minutes.
+
+[Enable Billing on your project](https://cloud.google.com/billing/docs/how-to/modify-project)
+
 
 Run `./GCP-StandUpK8sCluster.sh` and let Terok Nor fly!
 
@@ -57,6 +68,14 @@ Log in phpmyadmin as root on the myadmin subdomain using the mariadb root passwo
 
 Notice that it has access to the DB and lists all the information for the Galera cluster.
 
+
+# Cleanup
+Delete the cluster from the [Google Cloud Console - Kubernetes Engine](https://console.cloud.google.com/kubernetes/)
+
+Delete the load balancers from [Google Cloud Console - Network Services - Load Balancing](https://console.cloud.google.com/net-services/loadbalancing/)
+
+Delete the project (if you created it just for this)
+
 # Explanation of Tradeoffs Made Due to Timeboxing
 * I would have used a certificate manager inside kubernetes to manage the certificate secrets.  This would have the bonus of making it more secure as well as easier on the user. (DON'T USE WILDCARD CERTS IN PROD!)
 * Have the system automatically update the DNS using Google Cloud DNS (I've done this before and have a script for this in my [Helper-Scripts](https://github.com/butterkitty/Helper-Scripts) repository)
@@ -64,4 +83,6 @@ Notice that it has access to the DB and lists all the information for the Galera
 * Deploy a multiple master setup across multiple regions
 * Likely move the bash script into Terraform and output the given information from Terraform
 * Turn more of what is in the main.tf template into variables that the client can set
+* Do more prechecks on permissions for Google to make sure everything is set up right
+* Do more testing on the documentation (I rubber ducked it with someone for validation, but more is better)
 
