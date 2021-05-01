@@ -85,4 +85,5 @@ Delete the project (if you created it just for this)
 * Turn more of what is in the main.tf template into variables that the client can set
 * Do more prechecks on permissions for Google to make sure everything is set up right
 * Do more testing on the documentation (I rubber ducked it with someone for validation, but more is better)
+* Better security for the DB, especially TLS login and defining the password from a keystore
 
