@@ -56,11 +56,12 @@ Run `./GCP-StandUpK8sCluster.sh` and let Terok Nor fly!
 
 After the script finishes running, heed the instructions and information printed out to the terminal by the script
 
-Navigate to the dashboard, look at the ingresses and, eventually depending on how slow Google is being, there should be an ip per ingress.  
+Navigate to the dashboard, using the admin token (instructions on how to obtain it are printed out at the end of the script), look at the ingresses and, eventually depending on how slow Google is being, there should be an ip per ingress.  
 
 These are the load balencers and should be set accordingly to the dns' that we set during the setup process
 
 To test connectivity, log in phpmyadmin as root on the myadmin subdomain using the mariadb root password given
+
 Notice that it has access to the DB and lists all the information for the Galera cluster.
 
 # Verification

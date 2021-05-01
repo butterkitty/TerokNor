@@ -90,7 +90,7 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 echo -e "\nAccess http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ and use the token printed previously to continue\n"
 echo -e "\nREMEMBER: It can take up to 10 minutes for everything to stabilize and for Google to properly create the load balancers in GCP\n"
 
-echo "NOTE: THE TOKEN PROVIDED IS NOT THE ADMIN USER. TO GET THAT, RUN: ./GCP-K8s-GetToken.sh $cluster_name $main_node_zone 1"
+echo "NOTE: FOR SECURITY REASONS THE TOKEN PROVIDED IS NOT THE ADMIN USER. TO GET THAT, RUN: ./GCP-K8s-GetToken.sh $cluster_name $main_node_zone 1"
 
 kubectl proxy
 
