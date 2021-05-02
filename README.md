@@ -3,6 +3,8 @@
 
 A repo set up for the employment test with Koho
 
+Terok Nor uses Terraform and Bash to deploy a complete Google Kubernetes Engine (GKE) cluster running MariaDB Galera, Apache2, phpmyadmin, external load balancers, as well as the Kubernetes dashboard in order to help administrate it with.
+
 # Requirements:
 
 * Bash
@@ -54,9 +56,9 @@ Take the following steps to enable the Kubernetes Engine API:
 
 Run `./GCP-StandUpK8sCluster.sh` and let Terok Nor fly!
 
-After the script finishes running, heed the instructions and information printed out to the terminal by the script
+After the script finishes running, heed the instructions and information printed out to the terminal by the script.
 
-Navigate to the dashboard, using the admin token (instructions on how to obtain it are printed out at the end of the script), look at the ingresses and, eventually depending on how slow Google is being, there should be an ip per ingress.  
+Navigate to the dashboard, using the admin token (instructions on how to obtain it are printed out at the end of the script, and involve running the GCP-K8s-GetToken.sh script.  This is done due to security), look at the ingresses and, eventually depending on how slow Google is being, there should be an ip per ingress.  
 
 These are the load balencers and should be set accordingly to the dns' that we set during the setup process
 
@@ -96,4 +98,5 @@ Delete the project (if you created it just for this)
 * Do more prechecks on permissions for Google to make sure everything is set up right
 * Do more testing on the documentation (I rubber ducked it with someone for validation, but more is better)
 * Better security for the DB, especially TLS login and defining the password from a keystore
+* Automating more of the Google setup process.  Basically automating everything after setting up gcloud init.  The process is very complicated as it is.
 
