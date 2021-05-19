@@ -19,17 +19,17 @@
 # openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 #    -out tls.crt \
 #    -keyout tls.key \
-#    -subj "/CN=<subdomain>/O=koho-tls"
+#    -subj "/CN=<subdomain>/O=main-tls"
 # openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 #    -out myadmintls.crt \
 #    -keyout myadmintls.key \
-#    -subj "/CN=<subdomain>/O=koho-tls"
+#    -subj "/CN=<subdomain>/O=main-tls"
 # 
 # CHANGE <subdomain> TO YOUR OWN AND USE 2 DIFFERENT SUBDOMAINS
 
 # Change all the settings to your own in the main.tf file and the gcloud commands in this file.
 
-project="koho-deployment-test"
+project="deployment-test"
 cluster_name="main-zone"
 cluster_version="1.19.9-gke.1400"
 network_region="northamerica-northeast1"
