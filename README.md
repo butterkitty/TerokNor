@@ -1,4 +1,3 @@
-# devops-takehome-michelleplarina
 ![image](https://user-images.githubusercontent.com/481603/116768233-03c81480-aa03-11eb-896b-0b3ac0223ef8.png)
 
 A repo set up for the employment test with Koho
@@ -87,16 +86,4 @@ Delete the cluster from the [Google Cloud Console - Kubernetes Engine](https://c
 Delete the load balancers from [Google Cloud Console - Network Services - Load Balancing](https://console.cloud.google.com/net-services/loadbalancing/)
 
 Delete the project (if you created it just for this)
-
-# Explanation of Tradeoffs Made Due to Timeboxing
-* I would have used a certificate manager inside kubernetes to manage the certificate secrets.  This would have the bonus of making it more secure as well as easier on the user. (DON'T USE WILDCARD CERTS IN PROD!)
-* Have the system automatically update the DNS using Google Cloud DNS (I've done this before and have a script for this in my [Helper-Scripts](https://github.com/butterkitty/Helper-Scripts) repository)
-* I would likely store the Google Sevice Account credentials json using a KMS of some sort
-* Deploy a multiple master setup across multiple regions
-* Likely move the bash script into Terraform and output the given information from Terraform
-* Turn more of what is in the main.tf template into variables that the client can set
-* Do more prechecks on permissions for Google to make sure everything is set up right
-* Do more testing on the documentation (I rubber ducked it with someone for validation, but more is better)
-* Better security for the DB, especially TLS login and defining the password from a keystore
-* Automating more of the Google setup process.  Basically automating everything after setting up gcloud init.  The process is very complicated as it is.
 
